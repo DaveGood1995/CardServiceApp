@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Card Services App"
 include(":app")
- 
+include(":cardservicelibrary")
