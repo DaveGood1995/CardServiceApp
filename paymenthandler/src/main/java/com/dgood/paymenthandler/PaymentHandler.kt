@@ -4,7 +4,6 @@ import android.content.Context
 import com.dgood.paymenthandler.model.Card
 import com.dgood.paymenthandler.model.Tag
 import com.dgood.paymenthandler.model.request.RequestCustomerAccount
-import com.dgood.paymenthandler.model.request.Device
 import com.dgood.paymenthandler.model.request.RequestOrder
 import com.dgood.paymenthandler.model.request.TransactionRequest
 import com.dgood.paymenthandler.model.response.TransactionResponse
@@ -15,7 +14,6 @@ import java.io.InputStreamReader
 import java.util.Random
 import javax.xml.parsers.DocumentBuilderFactory
 
-
 class PaymentHandler(private val context: Context?) {
 
     private val serviceClient = ServiceClient(context)
@@ -25,12 +23,16 @@ class PaymentHandler(private val context: Context?) {
         return message
     }
 
-    fun makePayment(channel: String, terminal: String, requestOrder: RequestOrder, account: RequestCustomerAccount): TransactionResponse {
+    fun makePayment(
+        channel: String,
+        terminal: String,
+        requestOrder: RequestOrder,
+        account: RequestCustomerAccount
+    ): TransactionResponse {
 
         val transactionRequest = TransactionRequest(channel, terminal, requestOrder, account)
-        val response: TransactionResponse = serviceClient.makePayment(transactionRequest)
 
-        return response
+        return serviceClient.makePayment(transactionRequest)
     }
 
     fun readRawResourceAsString(context: Context, resourceId: Int): String {
@@ -105,17 +107,15 @@ class PaymentHandler(private val context: Context?) {
         val tlvStringBuilder = StringBuilder()
 
         for (tag in selectedCard.tags) {
-            val keyBytes = hexStringToByteArray(tag.key)
-            val valueBytes = hexStringToByteArray(tag.value)
+            val key = tag.key
+            val value = tag.value
 
-            val keyLength = keyBytes.size
-            val valueLength = valueBytes.size
+            val keyBytes = hexStringToByteArray(key)
+            val valueBytes = hexStringToByteArray(value)
 
-            tlvStringBuilder.append(keyBytes.joinToString("") { "%02X".format(it) })
-            tlvStringBuilder.append(String.format("%02X", keyBytes.size))  // Key length
-
-            tlvStringBuilder.append(valueBytes.joinToString("") { "%02X".format(it) })
-            tlvStringBuilder.append(String.format("%02X", valueBytes.size))  // Value length
+            tlvStringBuilder.append(key)
+            tlvStringBuilder.append(String.format("%02X", valueBytes.size))
+            tlvStringBuilder.append(value)
         }
 
         return tlvStringBuilder.toString()

@@ -10,10 +10,13 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
 import com.dgood.cardservicesapp.databinding.FragmentSecondBinding
 import com.dgood.paymenthandler.PaymentHandler
+import com.dgood.paymenthandler.ReceiptDatabaseHelper
 import com.dgood.paymenthandler.model.request.Device
 import com.dgood.paymenthandler.model.request.RequestCustomerAccount
 import com.dgood.paymenthandler.model.request.RequestOrder
+import com.dgood.paymenthandler.model.response.Receipt
 import com.dgood.paymenthandler.model.response.TransactionResponse
+import com.dgood.paymenthandler.model.response.formatReceipt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -25,11 +28,13 @@ class SecondFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var paymentHandler: PaymentHandler
+    private lateinit var receiptDatabaseHelper: ReceiptDatabaseHelper
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,6 +43,9 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         paymentHandler = PaymentHandler(requireContext())
+        receiptDatabaseHelper = ReceiptDatabaseHelper(requireContext())
+
+        generateRandomId()
 
         val currencyOptions = resources.getStringArray(R.array.currency_options)
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, currencyOptions)
@@ -88,7 +96,6 @@ class SecondFragment : Fragment() {
         val paymentCard = paymentHandler.getRandomCardData()
         val device = Device(resources.getString(R.string.deviceType), paymentCard.dataKsn.toString())
         val customerAccount = RequestCustomerAccount(device, paymentCard.payloadType.toString(), paymentHandler.getTlvString(paymentCard))
-        var transactionResponse: TransactionResponse? = null
 
         lifecycleScope.launch {
             val localTransactionResponse = withContext(Dispatchers.IO) {
@@ -98,6 +105,12 @@ class SecondFragment : Fragment() {
 //            binding.progressBar.visibility = View.GONE
 
             localTransactionResponse.transactionResult
+
+
+            val receipt = Receipt(formatReceipt(localTransactionResponse), localTransactionResponse)
+            val insertedId = receiptDatabaseHelper.insertReceipt(receipt)
+
+            val storedReceipts = receiptDatabaseHelper.getAllReceipts()
         }
     }
 
