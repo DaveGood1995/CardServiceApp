@@ -18,6 +18,7 @@
     <string name="sample_id">123456</string>
     <string name="sample_amount">0.00</string>
     <string name="generate_id">Generate Random Order ID</string>
+    <string name="make_payment">Make Payment</string>
     <string-array name="currency_options">
         <item>USD</item>
         <item>EUR</item>
@@ -32,4 +33,7 @@
         <item>£</item>
         <item>$</item>
     </string-array>
+    <string name="channel">POS</string>
+    <string name="terminal">5140001</string>
+    <string name="deviceType">PAX_A920_PRO</string>
 </resources>

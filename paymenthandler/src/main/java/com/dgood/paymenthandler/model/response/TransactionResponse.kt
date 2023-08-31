@@ -1,20 +1,17 @@
 package com.dgood.paymenthandler.model.response
 
-import com.dgood.paymenthandler.model.request.CustomerAccount
-import com.dgood.paymenthandler.model.request.Order
-
 data class OrderBreakdown(
     val subtotalAmount: Double
 )
 
-data class Order(
+data class ResponseOrder(
     val orderId: String,
     val currency: String,
     val totalAmount: Double,
     val orderBreakdown: OrderBreakdown
 )
 
-data class CustomerAccount(
+data class ResponseCustomerAccount(
     val cardType: String,
     val cardholderName: String,
     val maskedPan: String,
@@ -61,8 +58,8 @@ data class EmvTag(
 data class TransactionResponse(
     val uniqueReference: String,
     val terminal: String,
-    val order: Order,
-    val customerAccount: CustomerAccount,
+    val responseOrder: ResponseOrder,
+    val responseCustomerAccount: ResponseCustomerAccount,
     val securityCheck: SecurityCheck,
     val transactionResult: TransactionResult,
     val additionalDataFields: List<AdditionalDataField>,

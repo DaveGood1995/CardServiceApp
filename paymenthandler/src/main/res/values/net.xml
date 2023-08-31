@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name= "basePaymentsUrl">https://testpayments.worldnettps.com/merchant/api/v1</string>
-    <string name= "makePaymentEndpoint">/transaction/payments</string>
+    <string name= "makePaymentEndpoint">transaction/payments</string>
+    <string name= "getBearerTokenEndpoint">account/authenticate</string>
     <string name= "terminal">5140001</string>
     <string name= "apiKey">14c7974ba5b38d0dbcb7a0d8bdf3959e3b316a812ab3815db17878719f50c0ce8da30b7c1690ba5698ce2ae3a714047052b389b3d7401dbb457fcc7abdac3ffd</string>
 </resources>

@@ -1,8 +1,9 @@
 package com.dgood.paymenthandler.model.request
 
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 
-data class Order(
+data class RequestOrder(
     val orderId: String,
     val currency: String,
     val totalAmount: Double
@@ -11,22 +12,50 @@ data class Order(
 data class Device(
     val type: String,
     val dataKsn: String
-)
+) {
+    fun toJson(): String {
+        Gson()
+        val jsonObject = JsonObject()
 
-data class CustomerAccount(
+        jsonObject.addProperty("type", type)
+        jsonObject.addProperty("dataKsn", dataKsn)
+
+        return jsonObject.toString()
+    }
+}
+
+data class RequestCustomerAccount(
     val device: Device,
-    val tlv: String,
-    val payloadType: String
-)
+    val payloadType: String,
+    val tlv: String
+) {
+    fun toJson(): String {
+        val gson = Gson()
+        val jsonObject = JsonObject()
+
+        jsonObject.add("device", gson.toJsonTree(device.toJson()))
+        jsonObject.addProperty("payloadType", payloadType)
+        jsonObject.addProperty("tlv", tlv)
+
+        return jsonObject.toString()
+    }
+}
 
 data class TransactionRequest(
     val channel: String,
     val terminal: String,
-    val order: Order,
-    val customerAccount: CustomerAccount
+    val order: RequestOrder,
+    val customerAccount: RequestCustomerAccount
 ) {
     fun toJson(): String {
-        return Gson().toJson(this)
+        val gson = Gson()
+        val jsonObject = JsonObject()
+
+        jsonObject.addProperty("channel", channel)
+        jsonObject.addProperty("terminal", terminal)
+        jsonObject.add("order", gson.toJsonTree(order))
+        jsonObject.add("customerAccount", gson.toJsonTree(customerAccount))
+
+        return jsonObject.toString()
     }
 }
-
