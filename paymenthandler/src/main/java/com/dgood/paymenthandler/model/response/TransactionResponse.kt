@@ -57,7 +57,11 @@ data class EmvTag(
 
 data class Receipt(
     val formattedReceipt: String,
-    val transactionResponse: TransactionResponse
+    val transactionResponse: TransactionResponse,
+    val orderId: String,
+    val timestamp: String,
+    val amount: Double,
+    val currency: String
 )
 
 data class TransactionResponse(

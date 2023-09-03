@@ -7,7 +7,11 @@ class ReceiptManager {
 
     fun generateReceipt(transactionResponse: TransactionResponse): Receipt {
         val formattedReceipt = buildFormattedReceipt(transactionResponse)
-        val receipt = Receipt(formattedReceipt, transactionResponse)
+        val receipt = Receipt(formattedReceipt, transactionResponse,
+            transactionResponse.order.orderId,
+            transactionResponse.transactionResult.dateTime,
+            transactionResponse.order.totalAmount,
+            transactionResponse.order.currency)
         storedReceipts.add(receipt)
         return receipt
     }

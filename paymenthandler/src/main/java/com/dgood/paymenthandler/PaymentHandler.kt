@@ -19,8 +19,8 @@ class PaymentHandler(private val context: Context?) {
     private val serviceClient = ServiceClient(context)
 
     fun insertCardTransaction(amount: Double, order: String, currency: String): String {
-        val message = "Card Inserted: Amount - %s %.2f, Order - %s".format(currency, amount, order)
-        return message
+        return context!!.resources.getString(R.string.start_transaction_template)
+            .format(currency, amount, order)
     }
 
     fun makePayment(
@@ -35,7 +35,7 @@ class PaymentHandler(private val context: Context?) {
         return serviceClient.makePayment(transactionRequest)
     }
 
-    fun readRawResourceAsString(context: Context, resourceId: Int): String {
+    private fun readRawResourceAsString(context: Context, resourceId: Int): String {
         val inputStream = context.resources.openRawResource(resourceId)
         val reader = BufferedReader(InputStreamReader(inputStream))
 
@@ -49,7 +49,7 @@ class PaymentHandler(private val context: Context?) {
         return xmlData.toString()
     }
 
-    fun hexStringToByteArray(hex: String): ByteArray {
+    private fun hexStringToByteArray(hex: String): ByteArray {
         val len = hex.length
         val data = ByteArray(len / 2)
         var i = 0
@@ -60,7 +60,7 @@ class PaymentHandler(private val context: Context?) {
         return data
     }
 
-    fun parseCards(xml: String): List<Card> {
+    private fun parseCards(xml: String): List<Card> {
         val factory = DocumentBuilderFactory.newInstance()
         val builder = factory.newDocumentBuilder()
         val document = builder.parse(xml.byteInputStream())
@@ -110,7 +110,6 @@ class PaymentHandler(private val context: Context?) {
             val key = tag.key
             val value = tag.value
 
-            val keyBytes = hexStringToByteArray(key)
             val valueBytes = hexStringToByteArray(value)
 
             tlvStringBuilder.append(key)

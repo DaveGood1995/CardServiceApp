@@ -284,11 +284,11 @@
         <tags key="5f20" value="5465737420436172642035"/>
         <tags key="df78" value="1850010868"/>
     </card>
-    <card>
-        <cardholdername>Test Card Swipe</cardholdername>
-        <dataKsn>F876543211000000007B</dataKsn>
-        <serialNumber>1850010868</serialNumber>
-        <encryptedData>FAF2A7467873C0ED88F54ED8299F1CCB885919E6487EB8D3E586C34BA84A5E27F689FA97ECA9BA04</encryptedData>
-        <payloadType>MAG_STRIPE</payloadType>
-    </card>
+<!--    <card>-->
+<!--        <cardholdername>Test Card Swipe</cardholdername>-->
+<!--        <dataKsn>F876543211000000007B</dataKsn>-->
+<!--        <serialNumber>1850010868</serialNumber>-->
+<!--        <encryptedData>FAF2A7467873C0ED88F54ED8299F1CCB885919E6487EB8D3E586C34BA84A5E27F689FA97ECA9BA04</encryptedData>-->
+<!--        <payloadType>MAG_STRIPE</payloadType>-->
+<!--    </card>-->
 </cards>

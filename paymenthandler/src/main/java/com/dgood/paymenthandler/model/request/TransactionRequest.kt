@@ -11,7 +11,8 @@ data class RequestOrder(
 
 data class Device(
     val type: String,
-    val dataKsn: String
+    val dataKsn: String,
+    val serialNumber: String?
 ) {
     fun toJson(): String {
         Gson()
@@ -19,23 +20,45 @@ data class Device(
 
         jsonObject.addProperty("type", type)
         jsonObject.addProperty("dataKsn", dataKsn)
+        jsonObject.addProperty("serialNumber", serialNumber)
 
         return jsonObject.toString()
     }
 }
 
-data class RequestCustomerAccount(
+data class CardDetails(
     val device: Device,
-    val payloadType: String,
-    val tlv: String
+    val encryptedData: String
 ) {
     fun toJson(): String {
         val gson = Gson()
         val jsonObject = JsonObject()
 
         jsonObject.add("device", gson.toJsonTree(device.toJson()))
+        jsonObject.addProperty("encrypredData", encryptedData)
+
+        return jsonObject.toString()
+    }
+}
+
+data class RequestCustomerAccount(
+    val device: Device?,
+    val payloadType: String,
+    val tlv: String?,
+    val cardDetails: CardDetails?,
+    val cardholderName: String?
+) {
+    fun toJson(): String {
+        val gson = Gson()
+        val jsonObject = JsonObject()
+
+        jsonObject.add("device", gson.toJsonTree(device!!.toJson()))
         jsonObject.addProperty("payloadType", payloadType)
         jsonObject.addProperty("tlv", tlv)
+        jsonObject.add("cardDetails", gson.toJsonTree(cardDetails!!.toJson()))
+        jsonObject.addProperty("cardholderName", cardholderName)
+
+
 
         return jsonObject.toString()
     }

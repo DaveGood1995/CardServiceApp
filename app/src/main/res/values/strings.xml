@@ -2,11 +2,15 @@
     <string name="app_name">Card Services App</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="home_fragment_label">Home Fragment</string>
+    <string name="payment_fragment_label">Payment Fragment</string>
+    <string name="receipt_list_label">Receipt List</string>
+    <string name="receipt_detail_label">Receipt Detail</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="submit_transaction">Submit Transaction</string>
+    <string name="view_receipts">View Receipts</string>
+    <string name="app_info">App Info</string>
     <string name="welcome_message">Welcome to our Card Service App. This app uses a library to
     with and process a payment via a card</string>
 
@@ -17,8 +21,8 @@
     <string name="please_enter_order_id">Please enter your Order ID in the box below</string>
     <string name="sample_id">123456</string>
     <string name="sample_amount">0.00</string>
-    <string name="generate_id">Generate Random Order ID</string>
-    <string name="make_payment">Make Payment</string>
+    <string name="generate_id">Generate a New Random Order ID</string>
+    <string name="make_payment">Submit Payment</string>
     <string-array name="currency_options">
         <item>USD</item>
         <item>EUR</item>
@@ -36,4 +40,15 @@
     <string name="channel">POS</string>
     <string name="terminal">5140001</string>
     <string name="deviceType">PAX_A920_PRO</string>
+    <string name="delete_receipt">Delete Receipt</string>
+    <string name="receipt__text">Receipt Text</string>
+    <string name="order_Id">Order ID:</string>
+    <string name="time">Time and Date:</string>
+    <string name="currency">Currency:</string>
+    <string name="amount">Amount:</string>
+    <string name="confirm_delete_dialog_title">Delete Receipt?</string>
+    <string name="confirm_delete_dialog_message">You are about to delete this receipt, are you
+        sure?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>
