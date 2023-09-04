@@ -11,8 +11,11 @@ import org.w3c.dom.Element
 import org.w3c.dom.NodeList
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.util.Locale
 import java.util.Random
 import javax.xml.parsers.DocumentBuilderFactory
+
 
 class PaymentHandler(private val context: Context?) {
 
@@ -35,7 +38,7 @@ class PaymentHandler(private val context: Context?) {
         return serviceClient.makePayment(transactionRequest)
     }
 
-    private fun readRawResourceAsString(context: Context, resourceId: Int): String {
+    fun readRawResourceAsString(context: Context, resourceId: Int): String {
         val inputStream = context.resources.openRawResource(resourceId)
         val reader = BufferedReader(InputStreamReader(inputStream))
 
@@ -60,7 +63,7 @@ class PaymentHandler(private val context: Context?) {
         return data
     }
 
-    private fun parseCards(xml: String): List<Card> {
+    fun parseCards(xml: String): List<Card> {
         val factory = DocumentBuilderFactory.newInstance()
         val builder = factory.newDocumentBuilder()
         val document = builder.parse(xml.byteInputStream())
@@ -118,6 +121,14 @@ class PaymentHandler(private val context: Context?) {
         }
 
         return tlvStringBuilder.toString()
+    }
+
+    fun formatTimestamp(timestamp: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.ENGLISH)
+        val parsedDate = inputFormat.parse(timestamp)
+
+        val outputFormat = SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.ENGLISH)
+        return outputFormat.format(parsedDate!!)
     }
 
 }

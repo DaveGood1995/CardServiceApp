@@ -12,10 +12,10 @@
         android:padding="16dp">
 
     <ScrollView
+        android:id="@+id/scrollview_receipt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/generate_order_id_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -23,18 +23,33 @@
             android:id="@+id/textview_receipt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/receipt__text"
+            android:text="@string/receipt_text"
         android:padding="8dp" />
 
     </ScrollView>
-
+        <Button
+            android:id="@+id/home_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/home"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:backgroundTint="@color/blue"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/scrollview_receipt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
     <Button
         android:id="@+id/delete_receipt_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/delete_receipt"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         android:backgroundTint="#ff0000"
         android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/home_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

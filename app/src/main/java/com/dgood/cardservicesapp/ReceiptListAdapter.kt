@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dgood.paymenthandler.model.response.Receipt
-
 class ReceiptListAdapter(private val receiptData: List<Pair<Long, Receipt>>, private val onItemClick: (Long) -> Unit) :
     RecyclerView.Adapter<ReceiptListAdapter.ReceiptViewHolder>() {
 
@@ -14,7 +13,6 @@ class ReceiptListAdapter(private val receiptData: List<Pair<Long, Receipt>>, pri
         val orderIdTextView: TextView = itemView.findViewById(R.id.text_order_number)
         val timestampTextView: TextView = itemView.findViewById(R.id.text_timestamp)
         val amountTextView: TextView = itemView.findViewById(R.id.text_amount)
-        val currencyTextView: TextView = itemView.findViewById(R.id.text_currency)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReceiptViewHolder {
@@ -26,10 +24,14 @@ class ReceiptListAdapter(private val receiptData: List<Pair<Long, Receipt>>, pri
     override fun onBindViewHolder(holder: ReceiptViewHolder, position: Int) {
         val (databaseId, currentReceipt) = receiptData[position]
 
-        holder.orderIdTextView.text = currentReceipt.orderId
-        holder.timestampTextView.text = currentReceipt.timestamp
-        holder.amountTextView.text = currentReceipt.amount.toString()
-        holder.currencyTextView.text = currentReceipt.currency
+        val context = holder.itemView.context
+        val orderTemplate = context.resources.getString(R.string.order_number_template)
+        val timeTemplate = context.resources.getString(R.string.datetime_template)
+        val amountTemplate = context.resources.getString(R.string.amount_template)
+
+        holder.orderIdTextView.text = String.format(orderTemplate, currentReceipt.orderId)
+        holder.timestampTextView.text = String.format(timeTemplate, currentReceipt.timestamp)
+        holder.amountTextView.text = String.format(amountTemplate,currentReceipt.amount.toString())
 
         holder.itemView.setOnClickListener {
             onItemClick(databaseId)

@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_HomeFragment_to_ReceiptListFragment"
             app:destination="@id/ReceiptListFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_AppHelpFragment"
+            app:destination="@id/AppHelpFragment" />
     </fragment>
     <fragment
         android:id="@+id/PaymentFragment"
@@ -36,7 +39,7 @@
     <fragment
         android:id="@+id/ReceiptListFragment"
         android:name="com.dgood.cardservicesapp.ReceiptListFragment"
-        android:label="@string/receipt_detail_label"
+        android:label="@string/receipt_list_label"
         tools:layout="@layout/fragment_receipt_list">
 
         <action
@@ -56,5 +59,14 @@
             android:id="@+id/action_ReceiptDetailFragment_to_HomeFragment"
             app:destination="@id/HomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/AppHelpFragment"
+        android:name="com.dgood.cardservicesapp.AppHelpFragment"
+        android:label="@string/app_help_label"
+        tools:layout="@layout/fragment_app_help">
 
+        <action
+            android:id="@+id/action_AppHelpFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+    </fragment>
 </navigation>

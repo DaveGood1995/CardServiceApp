@@ -15,8 +15,6 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -39,7 +37,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_HomeFragment_to_ReceiptListFragment)
         }
         binding.buttonAppInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_HomeFragment_to_PaymentFragment)
+            findNavController().navigate(R.id.action_HomeFragment_to_AppHelpFragment)
         }
 
         receiptDatabaseHelper = ReceiptDatabaseHelper(requireContext())

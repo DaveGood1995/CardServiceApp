@@ -57,7 +57,10 @@ class ReceiptDatabaseHelper(context: Context) :
             val amount = cursor.getDouble(cursor.getColumnIndexOrThrow(ReceiptEntry.COLUMN_AMOUNT))
             val currency = cursor.getString(cursor.getColumnIndexOrThrow(ReceiptEntry.COLUMN_CURRENCY))
 
+            cursor.close()
+
             Receipt(formattedReceipt, transactionResponse, orderId, timestamp, amount, currency)
+
         } else {
             null
         }
@@ -110,7 +113,6 @@ class ReceiptDatabaseHelper(context: Context) :
                 val formattedReceipt = getString(getColumnIndexOrThrow(ReceiptEntry.COLUMN_FORMATTED_RECEIPT))
                 val transactionResponseJson = getString(getColumnIndexOrThrow(ReceiptEntry.COLUMN_TRANSACTION_RESPONSE))
                 val transactionResponse = Gson().fromJson(transactionResponseJson, TransactionResponse::class.java)
-                // Extract summary data into separate columns for later
                 val orderId = getString(getColumnIndexOrThrow(ReceiptEntry.COLUMN_ORDER_ID))
                 val timestamp = getString(getColumnIndexOrThrow(ReceiptEntry.COLUMN_TIMESTAMP))
                 val amount = getDouble(getColumnIndexOrThrow(ReceiptEntry.COLUMN_AMOUNT))

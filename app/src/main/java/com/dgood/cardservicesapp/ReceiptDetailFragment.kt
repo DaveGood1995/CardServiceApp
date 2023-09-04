@@ -34,6 +34,10 @@ class ReceiptDetailFragment : Fragment() {
         paymentHandler = PaymentHandler(requireContext())
         receiptDatabaseHelper = ReceiptDatabaseHelper(requireContext())
 
+        binding.homeButton.setOnClickListener {
+            findNavController().navigate(R.id.action_ReceiptDetailFragment_to_HomeFragment)
+        }
+
         binding.deleteReceiptButton.setOnClickListener {
             showConfirmationDialog()
         }
@@ -61,7 +65,7 @@ class ReceiptDetailFragment : Fragment() {
             }
             .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
               dialog.dismiss() }
-            .setCancelable(false) // Prevent dismissal by tapping outside the dialog
+            .setCancelable(false)
             .create()
 
         alertDialog.show()

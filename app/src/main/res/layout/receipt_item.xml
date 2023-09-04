@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -11,7 +10,7 @@
         android:id="@+id/text_order_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Order Number: 12345"
+        android:text="@string/order_number_template"
         android:textSize="16sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +20,7 @@
         android:id="@+id/text_timestamp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Timestamp: 2023-09-01 10:00 AM"
+        android:text="@string/datetime_template"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/text_order_number"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,22 +31,21 @@
         android:id="@+id/text_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="10.00"
+        android:text="@string/amount_template"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/text_timestamp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <TextView
-        android:id="@+id/text_currency"
+    <View
+        android:id="@+id/line_separator"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="10.00"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/text_timestamp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@+id/text_amount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

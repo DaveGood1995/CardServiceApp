@@ -14,15 +14,18 @@ import com.dgood.cardservicesapp.databinding.FragmentPaymentBinding
 import com.dgood.paymenthandler.PaymentHandler
 import com.dgood.paymenthandler.ReceiptDatabaseHelper
 import com.dgood.paymenthandler.model.Card
+import com.dgood.paymenthandler.model.ErrorResponse
 import com.dgood.paymenthandler.model.request.CardDetails
 import com.dgood.paymenthandler.model.request.Device
 import com.dgood.paymenthandler.model.request.RequestCustomerAccount
 import com.dgood.paymenthandler.model.request.RequestOrder
 import com.dgood.paymenthandler.model.response.Receipt
 import com.dgood.paymenthandler.model.response.formatReceipt
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import kotlin.random.Random
 import kotlinx.coroutines.*
-
 
 class PaymentFragment : Fragment() {
 
@@ -52,9 +55,6 @@ class PaymentFragment : Fragment() {
         receiptDatabaseHelper = ReceiptDatabaseHelper(requireContext())
         coroutineScope = CoroutineScope(Dispatchers.Main)
 
-
-        generateRandomId()
-
         val currencyOptions = resources.getStringArray(R.array.currency_options)
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, currencyOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -79,43 +79,62 @@ class PaymentFragment : Fragment() {
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                // Handle if needed
+
             }
         }
     }
 
     private suspend fun handleCardInsertion() {
-        // Add a delay for 5 seconds
+
         delay(5000)
 
-        // After the delay, perform the actions
         val randomCard = paymentHandler.getRandomCardData()
         insertCardDialog?.dismiss()
         showCardInsertedDialog()
 
-        // Add another delay for 5 seconds
         delay(5000)
 
-        // After the second delay, perform the actions
         cardInserteDialog?.dismiss()
         showGoingOnlineDialog()
         makePayment(randomCard)
     }
 
+    private fun startTransaction() {
+        val amountString = binding.amountEditText.text.toString()
+        val orderId = binding.orderIdEditText.text.toString()
 
-    private fun startTransaction(){
-        val message = paymentHandler.insertCardTransaction(
-            binding.amountEditText.text.toString().toDouble(),
-            binding.currencySpinner.selectedItem.toString(),
-            binding.orderIdEditText.text.toString())
+        val orderIdPattern = "^[a-zA-Z0-9]{1,6}$"
+        if (!orderId.matches(orderIdPattern.toRegex())) {
+            showError("Invalid order ID. It must be alphanumeric and up to 6 characters long.")
+            return
+        }
+
+        try {
+            val amount = amountString.toDouble()
+            if (amount <= 0.0) {
+                showError(resources.getString(R.string.amount_validation_message))
+                return
+            }
+        } catch (e: NumberFormatException) {
+            showError(resources.getString(R.string.order_id_validation_message))
+            return
+        }
+
+        val currency = binding.currencySpinner.selectedItem.toString()
+        val message = paymentHandler.insertCardTransaction(amountString.toDouble(), currency, orderId)
 
         showInsertCardDialog(message)
 
         coroutineScope?.launch {
             handleCardInsertion()
         }
-
-
+    }
+    private fun showError(errorMessage: String) {
+        Snackbar.make(
+            binding.root,
+            errorMessage,
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 
     private fun generateRandomOrderId(): String {
@@ -129,9 +148,9 @@ class PaymentFragment : Fragment() {
 
     private fun showInsertCardDialog(message: String) {
         insertCardDialog = AlertDialog.Builder(context)
-            .setTitle("Please Insert Card")
+            .setTitle(resources.getString(R.string.please_insert_card))
             .setMessage(message)
-            .setPositiveButton("Cancel") { dialog, _ ->
+            .setPositiveButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
@@ -141,9 +160,9 @@ class PaymentFragment : Fragment() {
 
     private fun showCardInsertedDialog() {
         cardInserteDialog = AlertDialog.Builder(context)
-            .setTitle("Card Inserted")
-            .setMessage("Card is now inserted")
-            .setPositiveButton("Cancel") { dialog, _ ->
+            .setTitle(resources.getString(R.string.card_inserted))
+            .setMessage(resources.getString(R.string.card_now_inserted))
+            .setPositiveButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
@@ -153,9 +172,9 @@ class PaymentFragment : Fragment() {
 
     private fun showGoingOnlineDialog() {
         goingOnlineDialog = AlertDialog.Builder(context)
-            .setTitle("Going Online")
-            .setMessage("Transaction in progress...")
-            .setPositiveButton("Cancel") { dialog, _ ->
+            .setTitle(resources.getString(R.string.going_online))
+            .setMessage(resources.getString(R.string.transaction_in_progress))
+            .setPositiveButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
@@ -172,18 +191,26 @@ class PaymentFragment : Fragment() {
         val order = RequestOrder(orderId, currency, amount)
 
         val customerAccount: RequestCustomerAccount =
-            if(paymentCard.payloadType.equals("EMV")){
-                val device = Device(resources.getString(R.string.deviceType), paymentCard.dataKsn.toString(),null)
+            if (paymentCard.payloadType.equals("EMV")) {
+                val device = Device(
+                    resources.getString(R.string.deviceType),
+                    paymentCard.dataKsn.toString(),
+                    null
+                )
                 RequestCustomerAccount(
                     device,
                     paymentCard.payloadType.toString(),
                     paymentHandler.getTlvString(paymentCard),
                     null,
                     null
-             )
+                )
             } else {
-                val device = Device(resources.getString(R.string.deviceType), paymentCard.dataKsn.toString(),paymentCard.serialNumber)
-                val cardDetails = CardDetails(device , paymentCard.encryptedData.toString())
+                val device = Device(
+                    resources.getString(R.string.deviceType),
+                    paymentCard.dataKsn.toString(),
+                    paymentCard.serialNumber
+                )
+                val cardDetails = CardDetails(device, paymentCard.encryptedData.toString())
                 RequestCustomerAccount(
                     null,
                     paymentCard.payloadType.toString(),
@@ -194,39 +221,79 @@ class PaymentFragment : Fragment() {
             }
 
         lifecycleScope.launch {
-            val localTransactionResponse = withContext(Dispatchers.IO) {
-                paymentHandler.makePayment(channelId, terminal, order, customerAccount)
+            try {
+                val localTransactionResponse = withContext(Dispatchers.IO) {
+                    paymentHandler.makePayment(channelId, terminal, order, customerAccount)
+                }
+
+                val receipt = Receipt(
+                    formatReceipt(localTransactionResponse),
+                    localTransactionResponse,
+                    localTransactionResponse.order.orderId,
+                    paymentHandler.formatTimestamp(
+                        localTransactionResponse.transactionResult.dateTime
+                    ),
+                    localTransactionResponse.order.totalAmount,
+                    localTransactionResponse.order.currency
+                )
+                val insertedId = receiptDatabaseHelper.insertReceipt(receipt)
+
+                goingOnlineDialog?.dismiss()
+
+                val bundle = Bundle()
+                bundle.putLong("id", insertedId)
+                findNavController().navigate(
+                    R.id.action_PaymentFragment_to_ReceiptDetailFragment,
+                    bundle
+                )
+            } catch (e: Exception) {
+                goingOnlineDialog!!.dismiss()
+                val errorMessage = e.message
+
+                val alertDialogBuilder = AlertDialog.Builder(context)
+
+                val titleStartIndex = errorMessage!!.indexOf(":")
+                val title = if (titleStartIndex >= 0) {
+                    errorMessage.substring(0, titleStartIndex).trim()
+                } else {
+                    "Error"
+                }
+
+                alertDialogBuilder.setTitle(title)
+
+                try {
+                    val jsonStartIndex = errorMessage.indexOf("{")
+                    val jsonEndIndex = errorMessage.lastIndexOf("}")
+
+                    if (jsonStartIndex >= 0 && jsonEndIndex >= 0 && jsonStartIndex < jsonEndIndex) {
+                        val jsonContent = errorMessage.substring(jsonStartIndex, jsonEndIndex + 1)
+
+                        val errorResponse = Gson().fromJson(jsonContent, ErrorResponse::class.java)
+
+                        val errorCode = errorResponse.details.firstOrNull()?.errorCode ?: "Unknown"
+                        val errorMessage = errorResponse.details.firstOrNull()?.errorMessage ?: "No description"
+
+                        val readableErrorMessage = "Code: $errorCode\nDescription: $errorMessage"
+
+                        alertDialogBuilder.setMessage(readableErrorMessage)
+                    } else {
+                        alertDialogBuilder.setMessage(errorMessage)
+                    }
+                } catch (jsonException: JsonSyntaxException) {
+                    alertDialogBuilder.setMessage(errorMessage)
+                }
+                alertDialogBuilder.setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                val alertDialog = alertDialogBuilder.create()
+                alertDialog.show()
             }
-
-//            binding.progressBar.visibility = View.GONE
-
-            localTransactionResponse.transactionResult
-
-
-            val receipt = Receipt(
-                formatReceipt(localTransactionResponse),
-                localTransactionResponse,
-                localTransactionResponse.order.orderId,
-                localTransactionResponse.transactionResult.dateTime,
-                localTransactionResponse.order.totalAmount,
-                localTransactionResponse.order.currency
-            )
-            val insertedId = receiptDatabaseHelper.insertReceipt(receipt)
-
-            goingOnlineDialog?.dismiss()
-
-            val bundle = Bundle()
-            bundle.putLong("id", insertedId)
-            findNavController().navigate(
-                R.id.action_PaymentFragment_to_ReceiptDetailFragment,
-                bundle
-            )
         }
     }
 
     private fun generateRandomId() {
         val randomAlphanumericString = generateRandomOrderId()
-        binding.orderIdEditText.text = randomAlphanumericString
+        binding.orderIdEditText.setText(randomAlphanumericString)
     }
 
     override fun onDestroyView() {

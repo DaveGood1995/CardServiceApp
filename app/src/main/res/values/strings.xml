@@ -1,27 +1,34 @@
 <resources>
-    <string name="app_name">Card Services App</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="home_fragment_label">Home Fragment</string>
-    <string name="payment_fragment_label">Payment Fragment</string>
+    <string name="app_name">Payment Processor</string>
+    <string name="action_settings">App Help</string>
+    <string name="home_fragment_label">Payment Processor Home</string>
+    <string name="payment_fragment_label">Make Payment</string>
     <string name="receipt_list_label">Receipt List</string>
     <string name="receipt_detail_label">Receipt Detail</string>
+    <string name="app_help_label">App Help</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="submit_transaction">Submit Transaction</string>
+    <string name="submit_transaction">Make a Payment</string>
+    <string name="contact_developer">Contact Developer</string>
+    <string name="version_template">Version: %s</string>
+    <string name="help_message">This app has been created as part of a Technical assessment for a
+    job interview. It can take an Order ID and Amount and process them with the companies RESTful
+    API via a library called Payment Handler. If there are any problems, please contact the
+        developer using the button below. </string>
     <string name="view_receipts">View Receipts</string>
-    <string name="app_info">App Info</string>
-    <string name="welcome_message">Welcome to our Card Service App. This app uses a library to
-    with and process a payment via a card</string>
+    <string name="app_info">App Help</string>
+    <string name="welcome_message">Welcome to Payment Processor. This app can process payments from
+    customers cards! </string>
 
     <string name="lorem_ipsum">
         Lorem
 
     </string>
-    <string name="please_enter_order_id">Please enter your Order ID in the box below</string>
+    <string name="please_enter_order_id">Please enter your Order ID in the box below or generate a
+        new one using the button.</string>
     <string name="sample_id">123456</string>
     <string name="sample_amount">0.00</string>
-    <string name="generate_id">Generate a New Random Order ID</string>
+    <string name="generate_id">Generate an Order ID</string>
     <string name="make_payment">Submit Payment</string>
     <string-array name="currency_options">
         <item>USD</item>
@@ -41,14 +48,28 @@
     <string name="terminal">5140001</string>
     <string name="deviceType">PAX_A920_PRO</string>
     <string name="delete_receipt">Delete Receipt</string>
-    <string name="receipt__text">Receipt Text</string>
+    <string name="home">Home</string>
+    <string name="receipt_text">Receipt Text</string>
     <string name="order_Id">Order ID:</string>
     <string name="time">Time and Date:</string>
     <string name="currency">Currency:</string>
+    <string name="currency_symbol">$</string>
     <string name="amount">Amount:</string>
     <string name="confirm_delete_dialog_title">Delete Receipt?</string>
     <string name="confirm_delete_dialog_message">You are about to delete this receipt, are you
         sure?</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="order_number_template">Order Number: %s</string>
+    <string name="datetime_template">Time/Date: %s</string>
+    <string name="currency_template">$</string>
+    <string name="amount_template">Amount: $%s</string>
+    <string name="amount_validation_message">Invalid amount. Please enter a positive number.</string>
+    <string name="order_id_validation_message">Invalid amount. Please enter a positive number.</string>
+    <string name="please_insert_card">Please Insert Card</string>
+    <string name="card_inserted">Card Inserted</string>
+    <string name="card_now_inserted">Card is now inserted</string>
+    <string name="going_online">Going Online</string>
+    <string name="transaction_in_progress">Transaction in progress…</string>
+    <string name="ok">OK</string>
 </resources>
