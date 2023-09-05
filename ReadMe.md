@@ -125,9 +125,9 @@ It uses Fragments for UI elements and popup dialogs for system messages. 
 This initial loading screen for the app, it is the main hub. From here you can navigate to Make a Payment, View stored Receipts - if there are
 any present and view App Help screen.
 
-![Initial Launch](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/5918b19b-97e9-44ad-840f-cc3f157b002d)
-![Home with Receipts](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/89d288a2-83b5-43b0-a7d2-9fe364249121)
-![Initial Launch2](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/50127f70-2968-4f5d-9eb1-9cfeee8fac87)
+![Initial Launch2](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/1bb3f0de-16ee-4072-81e2-e59a5cb12aa8)
+![Home with Receipts](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/d47ed533-7c97-4f49-b907-5645bacdc9fd)
+
 
 ### Payment Fragment
 This is the main processing fragment of the app. The user can either enter an OrderId or generate a random one using the button. The user must also
@@ -140,22 +140,21 @@ The app will account for different card types and create the request as required
 what went wrong, with an error code they can use to guide the developer to help fix their specific problem. Once a trasnaction is successfully completed
 the user will be passed to the Receipt Detail Fragment to view their transaction, this new receipt will also be stored in the database for review later. 
 
-
-![path](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/fe63f3dc-f5b0-4efe-a9d2-78a753471d32)
+![path](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/54d78926-2a84-410d-a696-4cc5e796ac0b)
 
 
 ### Receipt List Fragment
 Displays a list of stored receipts from the database of previous transactions, all items are clickable and will take you to Receipt Detail Fragment.
 
-![Receipt List](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/8694a534-ffc0-406e-9d8c-8da564486dbc)
+![Receipt List](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/3aa68d88-cc59-4662-88d2-8b6905d71e84)
 
 ### Receipt Detail Fragment
 Loads and shows the chosen Receipt from Receipt List fragment, presents the receipt in a view. There is an option to delete the open receipt and 
 another to return to Home Fragment.
 
+![Receipt Example](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/9268f61e-04cd-4803-a694-4b2eef1f363e)
+![Delete Receipt](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/efbdcd54-7c26-435c-90f7-2a751ea7194d)
 
-![Receipt Example](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/2cb41433-1da2-4af6-bc98-f00989708a32)
-![Delete Receipt](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/e157c849-29ea-4570-98bf-9639054ff6ee)
 
 ### Receipt List Adapter
 Takes Order Id, Timestamp and Amount from all entries in the database and lays out all Receipts using Receipt_item view and returns the elements to be 
@@ -165,9 +164,9 @@ populate the RecyclerView.
 Gives the current app version, a brief description of the app and a button to Contact the Developer. When clicked this will auto fill an email to the developer
 with a templated email with details to fill out in the users preferred email app. 
 
+![App Help](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/46302a2f-2e34-4327-bdd5-488d716b5720)
+![Contact Email](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/280d271f-4f6d-4b17-840a-60c819580d07)
 
-![App Help](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/fc8d9671-f547-42ed-bb10-0f55a0b43739)
-![Contact Email](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/58169ea7-a759-4d01-9d8a-67c0bf7a70c0)
 
 ## With more time...
 If I had some more time:
