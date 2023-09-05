@@ -12,7 +12,6 @@ import com.dgood.cardservicesapp.databinding.FragmentAppHelpBinding
 class AppHelpFragment : Fragment() {
 
     private var _binding: FragmentAppHelpBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -28,29 +27,33 @@ class AppHelpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Get the app's version name and display it in a TextView
         val packageInfo = requireActivity().packageManager.getPackageInfo(requireActivity().packageName, 0)
         val versionName = packageInfo.versionName
 
         val versionTextView = binding.appVersion
         versionTextView.text = String.format(resources.getString(R.string.version_template), versionName)
 
+        // Set a click listener for the "Contact Developer" button to send an email
         binding.buttonContactDeveloper.setOnClickListener {
             sendEmail()
         }
 
     }
 
+    // Override onDestroyView to release the binding
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-
+    // Function to send an email to the developer
     private fun sendEmail() {
         val emailAddress = "davidwgood@gmail.com"
         val subject = "Payment Processor Support"
         val message = "Phone Make:\nPhone Model:\nAndroid Version:\nHow can I help?\n"
 
+        // Create an email intent with recipient, subject, and message
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:")
             putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
@@ -58,6 +61,7 @@ class AppHelpFragment : Fragment() {
             putExtra(Intent.EXTRA_TEXT, message)
         }
 
-            startActivity(emailIntent)
-        }
+        // Start the email intent to allow the user to send an email
+        startActivity(emailIntent)
     }
+}

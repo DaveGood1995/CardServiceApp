@@ -34,11 +34,16 @@ class ReceiptListFragment : Fragment() {
 
         receiptDatabaseHelper = ReceiptDatabaseHelper(requireContext())
 
+        // Initialize the RecyclerView
         recyclerView = binding.recyclerViewReceipts
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // Retrieve a list of receipt pairs from the database
         val receiptPairs: List<Pair<Long, Receipt>> = receiptDatabaseHelper.getAllReceipts()
 
+        // Create an adapter for the RecyclerView and set a click listener
         adapter = ReceiptListAdapter(receiptPairs) { databaseId ->
+            // Handle item click by navigating to the ReceiptDetailFragment with a bundle
             val bundle = Bundle()
             bundle.putLong("id", databaseId)
             findNavController().navigate(
@@ -46,10 +51,11 @@ class ReceiptListFragment : Fragment() {
                 bundle
             )
         }
-
+        // Set the adapter for the RecyclerView
         recyclerView.adapter = adapter
     }
 
+    // Override onDestroyView to release the binding
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

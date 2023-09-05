@@ -35,10 +35,9 @@ class PaymentFragment : Fragment() {
     private lateinit var paymentHandler: PaymentHandler
     private lateinit var receiptDatabaseHelper: ReceiptDatabaseHelper
     private var insertCardDialog: AlertDialog? = null
-    private var cardInserteDialog: AlertDialog? = null
+    private var cardInsertedDialog: AlertDialog? = null
     private var goingOnlineDialog: AlertDialog? = null
     private var coroutineScope: CoroutineScope? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,11 +54,13 @@ class PaymentFragment : Fragment() {
         receiptDatabaseHelper = ReceiptDatabaseHelper(requireContext())
         coroutineScope = CoroutineScope(Dispatchers.Main)
 
+        // Initialize the currency spinner
         val currencyOptions = resources.getStringArray(R.array.currency_options)
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, currencyOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.currencySpinner.adapter = adapter
 
+        // Set click listeners for buttons
         binding.generateOrderIdButton.setOnClickListener {
             generateRandomId()
         }
@@ -68,6 +69,7 @@ class PaymentFragment : Fragment() {
             startTransaction()
         }
 
+        // Set item selected listener for the currency spinner
         binding.currencySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -84,21 +86,24 @@ class PaymentFragment : Fragment() {
         }
     }
 
+    // Function to handle card insertion and transaction
     private suspend fun handleCardInsertion() {
 
         delay(5000)
 
+        // Get random card data from PaymentHandler
         val randomCard = paymentHandler.getRandomCardData()
         insertCardDialog?.dismiss()
         showCardInsertedDialog()
 
         delay(5000)
 
-        cardInserteDialog?.dismiss()
+        cardInsertedDialog?.dismiss()
         showGoingOnlineDialog()
         makePayment(randomCard)
     }
 
+    // Function to initiate a payment transaction
     private fun startTransaction() {
         val amountString = binding.amountEditText.text.toString()
         val orderId = binding.orderIdEditText.text.toString()
@@ -129,6 +134,8 @@ class PaymentFragment : Fragment() {
             handleCardInsertion()
         }
     }
+
+    // Function to show an error message using Snackbar
     private fun showError(errorMessage: String) {
         Snackbar.make(
             binding.root,
@@ -137,6 +144,7 @@ class PaymentFragment : Fragment() {
         ).show()
     }
 
+    // Function to generate a random order ID
     private fun generateRandomOrderId(): String {
         val alphanumericChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         val random = Random.Default
@@ -146,6 +154,7 @@ class PaymentFragment : Fragment() {
             .joinToString("")
     }
 
+    // Function to show the card insertion dialog
     private fun showInsertCardDialog(message: String) {
         insertCardDialog = AlertDialog.Builder(context)
             .setTitle(resources.getString(R.string.please_insert_card))
@@ -155,11 +164,12 @@ class PaymentFragment : Fragment() {
             }
             .create()
 
-       insertCardDialog?.show()
+        insertCardDialog?.show()
     }
 
+    // Function to show the card inserted dialog
     private fun showCardInsertedDialog() {
-        cardInserteDialog = AlertDialog.Builder(context)
+        cardInsertedDialog = AlertDialog.Builder(context)
             .setTitle(resources.getString(R.string.card_inserted))
             .setMessage(resources.getString(R.string.card_now_inserted))
             .setPositiveButton(resources.getString(R.string.cancel)) { dialog, _ ->
@@ -167,9 +177,10 @@ class PaymentFragment : Fragment() {
             }
             .create()
 
-       cardInserteDialog?.show()
+        cardInsertedDialog?.show()
     }
 
+    // Function to show the "going online" dialog
     private fun showGoingOnlineDialog() {
         goingOnlineDialog = AlertDialog.Builder(context)
             .setTitle(resources.getString(R.string.going_online))
@@ -182,6 +193,7 @@ class PaymentFragment : Fragment() {
         goingOnlineDialog?.show()
     }
 
+    // Function to make a payment
     private fun makePayment(paymentCard: Card) {
         val channelId = resources.getString(R.string.channel)
         val terminal = resources.getString(R.string.terminal)
@@ -190,6 +202,7 @@ class PaymentFragment : Fragment() {
         val amount = binding.amountEditText.text.toString().toDouble()
         val order = RequestOrder(orderId, currency, amount)
 
+        // Create a RequestCustomerAccount based on the card type
         val customerAccount: RequestCustomerAccount =
             if (paymentCard.payloadType.equals("EMV")) {
                 val device = Device(
@@ -220,12 +233,14 @@ class PaymentFragment : Fragment() {
                 )
             }
 
+        // Use a coroutine to make the payment
         lifecycleScope.launch {
             try {
                 val localTransactionResponse = withContext(Dispatchers.IO) {
                     paymentHandler.makePayment(channelId, terminal, order, customerAccount)
                 }
 
+                // Create a Receipt object from the transaction response
                 val receipt = Receipt(
                     formatReceipt(localTransactionResponse),
                     localTransactionResponse,
@@ -236,10 +251,14 @@ class PaymentFragment : Fragment() {
                     localTransactionResponse.order.totalAmount,
                     localTransactionResponse.order.currency
                 )
+
+                // Insert the receipt into the database
                 val insertedId = receiptDatabaseHelper.insertReceipt(receipt)
 
+                // Dismiss the "going online" dialog
                 goingOnlineDialog?.dismiss()
 
+                // Navigate to the ReceiptDetailFragment with the receipt ID
                 val bundle = Bundle()
                 bundle.putLong("id", insertedId)
                 findNavController().navigate(
@@ -291,14 +310,15 @@ class PaymentFragment : Fragment() {
         }
     }
 
+    // Function to generate a random order ID and populate the UI
     private fun generateRandomId() {
         val randomAlphanumericString = generateRandomOrderId()
         binding.orderIdEditText.setText(randomAlphanumericString)
     }
 
+    // Override the onDestroyView method to clean up the binding
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }
