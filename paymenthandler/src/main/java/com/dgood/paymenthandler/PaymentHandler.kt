@@ -16,16 +16,31 @@ import java.util.Locale
 import java.util.Random
 import javax.xml.parsers.DocumentBuilderFactory
 
-
+/**
+ * PaymentHandler is responsible for handling payment transactions and related operations.
+ */
 class PaymentHandler(private val context: Context?) {
 
     private val serviceClient = ServiceClient(context)
-
+    /**
+     * Generates a formatted transaction string for card insertion.
+     * @param amount The transaction amount.
+     * @param order The order identifier.
+     * @param currency The currency used for the transaction.
+     * @return A formatted transaction string.
+     */
     fun insertCardTransaction(amount: Double, order: String, currency: String): String {
         return context!!.resources.getString(R.string.start_transaction_template)
             .format(currency, amount, order)
     }
-
+    /**
+     * Initiates a payment transaction.
+     * @param channel The payment channel.
+     * @param terminal The payment terminal identifier.
+     * @param requestOrder The order details.
+     * @param account The customer account details.
+     * @return The transaction response.
+     */
     fun makePayment(
         channel: String,
         terminal: String,
@@ -51,7 +66,12 @@ class PaymentHandler(private val context: Context?) {
 
         return xmlData.toString()
     }
-
+    /**
+     * Converts a hexadecimal string to a byte array.
+     *
+     * @param hex The hexadecimal string to convert.
+     * @return The resulting byte array.
+     */
     private fun hexStringToByteArray(hex: String): ByteArray {
         val len = hex.length
         val data = ByteArray(len / 2)
@@ -62,7 +82,12 @@ class PaymentHandler(private val context: Context?) {
         }
         return data
     }
-
+    /**
+     * Parses XML data and returns a list of Card objects.
+     *
+     * @param xml The XML data to parse.
+     * @return A list of Card objects.
+     */
     fun parseCards(xml: String): List<Card> {
         val factory = DocumentBuilderFactory.newInstance()
         val builder = factory.newDocumentBuilder()
@@ -94,7 +119,11 @@ class PaymentHandler(private val context: Context?) {
 
         return cardList
     }
-
+    /**
+     * Retrieves random card data from a sample XML resource.
+     *
+     * @return A randomly selected Card object.
+     */
     fun getRandomCardData(): Card {
         val resourceId = R.raw.sample_card
         val xmlData = readRawResourceAsString(context!!, resourceId)
@@ -105,7 +134,12 @@ class PaymentHandler(private val context: Context?) {
 
         return cardList[random.nextInt(cardList.size)]
     }
-
+    /**
+     * Converts a Card's tags into a TLV (Tag-Length-Value) formatted string.
+     *
+     * @param selectedCard The Card object containing tags to convert.
+     * @return The TLV formatted string.
+     */
     fun getTlvString(selectedCard: Card): String {
         val tlvStringBuilder = StringBuilder()
 
@@ -122,7 +156,12 @@ class PaymentHandler(private val context: Context?) {
 
         return tlvStringBuilder.toString()
     }
-
+    /**
+     * Formats a timestamp string to a more readable format.
+     *
+     * @param timestamp The timestamp string in a specific format.
+     * @return The formatted timestamp as a string.
+     */
     fun formatTimestamp(timestamp: String): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.ENGLISH)
         val parsedDate = inputFormat.parse(timestamp)
@@ -130,5 +169,4 @@ class PaymentHandler(private val context: Context?) {
         val outputFormat = SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.ENGLISH)
         return outputFormat.format(parsedDate!!)
     }
-
 }
