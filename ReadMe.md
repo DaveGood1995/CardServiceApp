@@ -125,8 +125,7 @@ It uses Fragments for UI elements and popup dialogs for system messages. 
 This initial loading screen for the app, it is the main hub. From here you can navigate to Make a Payment, View stored Receipts - if there are
 any present and view App Help screen.
 
-
-![Initial Launch](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/331070d7-20ea-4f9f-a041-c7f896b5f869)
+![Initial Launch](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/5918b19b-97e9-44ad-840f-cc3f157b002d)
 ![Home with Receipts](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/89d288a2-83b5-43b0-a7d2-9fe364249121)
 
 ### Payment Fragment
