@@ -127,7 +127,15 @@ any present and view App Help screen.
 
 ### Payment Fragment
 This is the main processing fragment of the app. The user can either enter an OrderId or generate a random one using the button. The user must also
-enter an amount, there is some basic validation to ensure entries will not cause errors. 
+enter an amount, there is some basic validation to ensure entries will not cause errors. Once a transaction is started, the app contacts the library
+and gets back an insert card message. Delays have been added to slow the process down, after 5 seconds the library grabs a random card from our Sample_Card
+data and returns it to the app, after another 5 seconds the app triggers the MakePayment class which calls the library, populates TransactionRequest with required
+data and sends the request to the library in a coroutine that is tied to the fragments lifecycle. 
+
+The app will account for different card types and create the request as required. Errors will be handled gracefully and should give the user some indication as to 
+what went wrong, with an error code they can use to guide the developer to help fix their specific problem. Once a trasnaction is successfully completed
+the user will be passed to the Receipt Detail Fragment to view their transaction, this new receipt will also be stored in the database for review later. 
+
 
 ### Receipt List Fragment
 Displays a list of stored receipts from the database of previous transactions, all items are clickable and will take you to Receipt Detail Fragment.
