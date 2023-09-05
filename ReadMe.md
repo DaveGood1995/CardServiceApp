@@ -124,6 +124,8 @@ It uses Fragments for UI elements and popup dialogs for system messages.
 ### Home Fragment
 This initial loading screen for the app, it is the main hub. From here you can navigate to Make a Payment, View stored Receipts - if there are
 any present and view App Help screen.
+![Initial Launch](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/6ef9f984-4622-49a4-ba41-b77a765fa4ed)
+![Home with Receipts](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/d54b01ff-1516-422f-8ff3-31893879a02e)
 
 ### Payment Fragment
 This is the main processing fragment of the app. The user can either enter an OrderId or generate a random one using the button. The user must also
@@ -135,6 +137,7 @@ data and sends the request to the library in a coroutine that is tied to the fra
 The app will account for different card types and create the request as required. Errors will be handled gracefully and should give the user some indication as to 
 what went wrong, with an error code they can use to guide the developer to help fix their specific problem. Once a trasnaction is successfully completed
 the user will be passed to the Receipt Detail Fragment to view their transaction, this new receipt will also be stored in the database for review later. 
+![path](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/fe63f3dc-f5b0-4efe-a9d2-78a753471d32)
 
 
 ### Receipt List Fragment
@@ -143,6 +146,8 @@ Displays a list of stored receipts from the database of previous transactions, a
 ### Receipt Detail Fragment
 Loads and shows the chosen Receipt from Receipt List fragment, presents the receipt in a view. There is an option to delete the open receipt and 
 another to return to Home Fragment
+![Receipt List](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/9778c4db-c7af-431d-8861-fb324ca33df2)
+![Delete Receipt](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/0c573a77-5e02-410c-8a62-25528ca3f10c)
 
 ### Receipt List Adapter
 Takes Order Id, Timestamp and Amount from all entries in the database and lays out all Receipts using Receipt_item view and returns the elements to be 
@@ -151,3 +156,5 @@ populate the RecyclerView.
 ### App Help Fragment
 Gives the current app version, a brief description of the app and a button to Contact the Developer. When clicked this will auto fill an email to the developer
 with a templated email with details to fill out in the users preferred email app. 
+![App Help](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/882364ee-3795-4d37-8c25-585ca9404ac2)
+![Contact Email](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/11c4ea37-537a-4b80-a0b6-307e1608baeb)
