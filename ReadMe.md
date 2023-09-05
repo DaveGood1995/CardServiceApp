@@ -127,6 +127,7 @@ any present and view App Help screen.
 
 ![Initial Launch](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/5918b19b-97e9-44ad-840f-cc3f157b002d)
 ![Home with Receipts](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/89d288a2-83b5-43b0-a7d2-9fe364249121)
+![Initial Launch2](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/50127f70-2968-4f5d-9eb1-9cfeee8fac87)
 
 ### Payment Fragment
 This is the main processing fragment of the app. The user can either enter an OrderId or generate a random one using the button. The user must also
