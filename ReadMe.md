@@ -43,12 +43,12 @@ serial number, encrypted data, payload type, and associated tags.
 **Get Random Card Data:**</br>
 It retrieves a random card's data from the SAMPLE_CARD data file.
 
-**Get TLV String:**</br> 
+**Get TLV String:**</br>
 This method constructs a TLV (Tag-Length-Value) string from a selected card's tags. 
 It takes a Card object as input and returns the TLV string, which is commonly used in payment 
 processing.
 
-**Format Timestamp:**</br> 
+**Format Timestamp:**</br>
 It converts a timestamp string from one date format to another. This is useful
 for formatting timestamps for display purposes.
 
@@ -56,24 +56,24 @@ for formatting timestamps for display purposes.
 The Service Client of Payment Handler contains all the communication functions for the PayRoc gateway,
 mainly getting the Bearer token and making a payment request.
 
-**Get Bearer Token:**</br> 
+**Get Bearer Token:**</br>
 This private method sends a GET request to the specified endpoint to obtain a 
 bearer token for authentication. It adds the API key as an Authorization header and parses the 
 response to extract the token. The token is used for authenticating subsequent requests to the API.
 
-**Make Payment:**</br> 
+**Make Payment:**</br>
 The makePayment method initiates a payment transaction by constructing a POST request 
 with a JSON payload containing the transaction details. It includes the bearer token obtained from
 the getBearerToken method in the request header for authentication. If the response indicates an 
 error (e.g., 400 Bad Request, 401 Unauthorized), it throws custom exceptions based on the HTTP 
 status codes.
 
-**Exception Handling:**</br> 
+**Exception Handling:**</br>
 The class includes error handling for network-related exceptions and JSON 
 parsing exceptions, providing meaningful custom exceptions with error messages to help identify and 
 handle specific issues.
 
-**Resource Configuration:**</br> 
+**Resource Configuration:**</br>
 The class retrieves various configuration values from the Android 
 application's resources, including the base URL, API endpoints, and API key, allowing for easy 
 configuration and maintenance.
