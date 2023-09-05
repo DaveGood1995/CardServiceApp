@@ -22,7 +22,7 @@ The insertCardTransaction method formats a transaction string with the
 provided amount, order, and currency. This method is responsible for creating a transaction request
 string but does not process the payment. The string is returned to the app to be displayed in a dialog.
 
-#### Make Payment: 
+**Make Payment:**
 The makePayment method initiates a payment transaction by constructing a 
 TransactionRequest object and passing it to a ServiceClient for processing. It returns a 
 TransactionResponse object, which contains the result of the payment transaction.
