@@ -117,5 +117,29 @@ correctly format and access certain data elements when required.
 There are some unit tests setup to test functions of the library that are called by the App, to ensure core functionality isnt broken when 
 further development occurs. 
 
+## Payment Processor App
+Payment Processor is a relatively simple app put together to interact with and demonstrate the functionality of the PaymentHandler Library. 
+It uses Fragments for UI elements and popup dialogs for system messages. 
 
+### Home Fragment
+This initial loading screen for the app, it is the main hub. From here you can navigate to Make a Payment, View stored Receipts - if there are
+any present and view App Help screen.
 
+### Payment Fragment
+This is the main processing fragment of the app. The user can either enter an OrderId or generate a random one using the button. The user must also
+enter an amount, there is some basic validation to ensure entries will not cause errors. 
+
+### Receipt List Fragment
+Displays a list of stored receipts from the database of previous transactions, all items are clickable and will take you to Receipt Detail Fragment.
+
+### Receipt Detail Fragment
+Loads and shows the chosen Receipt from Receipt List fragment, presents the receipt in a view. There is an option to delete the open receipt and 
+another to return to Home Fragment
+
+### Receipt List Adapter
+Takes Order Id, Timestamp and Amount from all entries in the database and lays out all Receipts using Receipt_item view and returns the elements to be 
+populate the RecyclerView.
+
+### App Help Fragment
+Gives the current app version, a brief description of the app and a button to Contact the Developer. When clicked this will auto fill an email to the developer
+with a templated email with details to fill out in the users preferred email app. 
