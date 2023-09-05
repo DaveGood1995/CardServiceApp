@@ -124,10 +124,8 @@ It uses Fragments for UI elements and popup dialogs for system messages.
 ### Home Fragment
 This initial loading screen for the app, it is the main hub. From here you can navigate to Make a Payment, View stored Receipts - if there are
 any present and view App Help screen.
-![Initial Launch](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/61291211-feda-4a9a-89ac-b7284a1a5b6b)
-
-![Home with Receipts](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/d54b01ff-1516-422f-8ff3-31893879a02e)
-
+![Initial Launch](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/331070d7-20ea-4f9f-a041-c7f896b5f869)
+![Home with Receipts](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/89d288a2-83b5-43b0-a7d2-9fe364249121)
 
 ### Payment Fragment
 This is the main processing fragment of the app. The user can either enter an OrderId or generate a random one using the button. The user must also
@@ -149,8 +147,9 @@ Displays a list of stored receipts from the database of previous transactions, a
 ### Receipt Detail Fragment
 Loads and shows the chosen Receipt from Receipt List fragment, presents the receipt in a view. There is an option to delete the open receipt and 
 another to return to Home Fragment
-![Receipt List](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/9778c4db-c7af-431d-8861-fb324ca33df2)
-![Delete Receipt](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/0c573a77-5e02-410c-8a62-25528ca3f10c)
+![Receipt List](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/8694a534-ffc0-406e-9d8c-8da564486dbc)
+![Receipt Example](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/2cb41433-1da2-4af6-bc98-f00989708a32)
+![Delete Receipt](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/e157c849-29ea-4570-98bf-9639054ff6ee)
 
 ### Receipt List Adapter
 Takes Order Id, Timestamp and Amount from all entries in the database and lays out all Receipts using Receipt_item view and returns the elements to be 
@@ -159,5 +158,6 @@ populate the RecyclerView.
 ### App Help Fragment
 Gives the current app version, a brief description of the app and a button to Contact the Developer. When clicked this will auto fill an email to the developer
 with a templated email with details to fill out in the users preferred email app. 
-![App Help](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/882364ee-3795-4d37-8c25-585ca9404ac2)
-![Contact Email](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/11c4ea37-537a-4b80-a0b6-307e1608baeb)
+![App Help](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/fc8d9671-f547-42ed-bb10-0f55a0b43739)
+![Contact Email](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/58169ea7-a759-4d01-9d8a-67c0bf7a70c0)
+
