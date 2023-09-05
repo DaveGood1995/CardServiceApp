@@ -148,12 +148,13 @@ the user will be passed to the Receipt Detail Fragment to view their transaction
 ### Receipt List Fragment
 Displays a list of stored receipts from the database of previous transactions, all items are clickable and will take you to Receipt Detail Fragment.
 
+![Receipt List](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/8694a534-ffc0-406e-9d8c-8da564486dbc)
+
 ### Receipt Detail Fragment
 Loads and shows the chosen Receipt from Receipt List fragment, presents the receipt in a view. There is an option to delete the open receipt and 
 another to return to Home Fragment.
 
 
-![Receipt List](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/8694a534-ffc0-406e-9d8c-8da564486dbc)
 ![Receipt Example](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/2cb41433-1da2-4af6-bc98-f00989708a32)
 ![Delete Receipt](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/e157c849-29ea-4570-98bf-9639054ff6ee)
 
