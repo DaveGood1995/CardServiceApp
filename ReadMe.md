@@ -124,6 +124,7 @@ It uses Fragments for UI elements and popup dialogs for system messages.
 ### Home Fragment
 This initial loading screen for the app, it is the main hub. From here you can navigate to Make a Payment, View stored Receipts - if there are
 any present and view App Help screen.
+<img src="[https://github.com/DaveGood1995/CardServiceApp/assets/52549556/6ef9f984-4622-49a4-ba41-b77a765fa4ed]" width=50% height=50%>
 ![Initial Launch](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/6ef9f984-4622-49a4-ba41-b77a765fa4ed)
 ![Home with Receipts](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/d54b01ff-1516-422f-8ff3-31893879a02e)
 
@@ -138,6 +139,7 @@ The app will account for different card types and create the request as required
 what went wrong, with an error code they can use to guide the developer to help fix their specific problem. Once a trasnaction is successfully completed
 the user will be passed to the Receipt Detail Fragment to view their transaction, this new receipt will also be stored in the database for review later. 
 ![path](https://github.com/DaveGood1995/CardServiceApp/assets/52549556/fe63f3dc-f5b0-4efe-a9d2-78a753471d32)
+
 
 
 ### Receipt List Fragment
