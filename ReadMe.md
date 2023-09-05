@@ -1,17 +1,17 @@
 # Card Services Application
 
-###Introduction
+## Introduction
 The specification provided for this technical test was to create a library and application that process
 transactions on the PAYROC gateway. I was provided with the REST Api documentation along with some
 sample Card Data, requests and responses. There was a stipulation that the application should 
 handle all messaging and events from the library.
 
-###Installation
+## Installation
 The repo can be cloned as is, the app should build and run as normal when loaded in Android Studio. The library 
 is called PaymentHandler and should also be pulled in and is already listed as a dependency for the app. The app uses a fragmented 
 layout and calls different functions from the PaymentHandler library.
 
-###Payment Handler Library
+## Payment Handler Library
 
 ##### Payment Handler Class
 PaymentHandler contains all models and communication functions between the app and the library, also 
