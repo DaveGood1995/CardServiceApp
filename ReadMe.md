@@ -13,7 +13,7 @@ layout and calls different functions from the PaymentHandler library.
 
 ## Payment Handler Library
 
-**Payment Handler Class**
+**Payment Handler Class**</br>
 PaymentHandler contains all models and communication functions between the app and the library, as well as
 between the library and the PAYROC gateway. I will quickly give a breakdown of the paymentHandler class.
 
