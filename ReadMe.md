@@ -13,11 +13,11 @@ layout and calls different functions from the PaymentHandler library.
 
 ## Payment Handler Library
 
-### Payment Handler Class
+**Payment Handler Class**
 PaymentHandler contains all models and communication functions between the app and the library, as well as
 between the library and the PAYROC gateway. I will quickly give a breakdown of the paymentHandler class.
 
-#### Insert Card Transaction:
+**Insert Card Transaction:**
 The insertCardTransaction method formats a transaction string with the
 provided amount, order, and currency. This method is responsible for creating a transaction request
 string but does not process the payment. The string is returned to the app to be displayed in a dialog.
